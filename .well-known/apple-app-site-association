@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["AVAA63GHH3.com.smarthome.control"],
+        "components": [
+          { "/": "/pair", "comment": "Match /pair exactly" },
+          { "/": "/pair/*", "comment": "Match /pair/anything" },
+          { "/": "/pair?*", "comment": "Match /pair with any query string" }
+        ]
+      }
+    ]
+  }
+}
