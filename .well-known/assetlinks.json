@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.smarthome.control",
+      "sha256_cert_fingerprints": [
+        "A1:82:07:E8:9D:99:C1:04:E8:85:DF:6A:F5:CF:D3:04:D6:AB:32:DB:63:AB:60:6A:18:E0:F3:E1:FC:A8:C8:0F"
+      ]
+    }
+  }
+]
