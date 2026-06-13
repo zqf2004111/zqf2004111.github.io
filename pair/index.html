@@ -1,17 +1,106 @@
 <!doctype html>
+<html lang="zh-CN">
+<head>
 <meta charset="utf-8">
-<title>SmartSofa Pairing</title>
-<style>body{font-family:system-ui,sans-serif;max-width:480px;margin:40px auto;padding:0 16px;color:#222}a.btn{display:inline-block;background:#0066CC;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;margin-top:16px}</style>
-<h1>SmartSofa</h1>
-<p id="msg">If the SmartSofa app is installed, it should open automatically. Otherwise, please install the app first.</p>
-<a class="btn" id="store" href="#">Install App</a>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0066CC">
+<title>智能沙发 配对</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Helvetica,"Microsoft YaHei",Arial,sans-serif;
+    background:linear-gradient(160deg,#f5f7fa 0%,#e8eef5 100%);
+    color:#1a1a1a;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
+    -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    width:100%;max-width:420px;margin:auto 0;
+    background:#fff;border-radius:20px;padding:32px 24px;
+    box-shadow:0 8px 32px rgba(0,0,0,.08);text-align:center;
+  }
+  .logo{
+    width:72px;height:72px;border-radius:18px;
+    background:linear-gradient(135deg,#0066CC,#3B82F6);
+    margin:0 auto 20px;display:flex;align-items:center;justify-content:center;
+    font-size:36px;color:#fff;box-shadow:0 6px 20px rgba(0,102,204,.3);
+  }
+  h1{font-size:22px;font-weight:600;margin:0 0 8px;letter-spacing:.5px}
+  .sub{font-size:14px;color:#666;margin:0 0 24px;line-height:1.6}
+  .device{
+    background:#f5f7fa;border-radius:12px;padding:14px;margin:16px 0;
+    font-size:13px;color:#555;
+  }
+  .device .name{font-size:15px;font-weight:600;color:#0066CC;margin-top:4px;letter-spacing:1px}
+  .btn{
+    display:block;width:100%;
+    background:linear-gradient(135deg,#0066CC,#3B82F6);
+    color:#fff;font-size:16px;font-weight:500;
+    padding:14px 20px;border-radius:12px;text-decoration:none;
+    margin-top:12px;box-shadow:0 4px 14px rgba(0,102,204,.25);
+    transition:transform .15s,box-shadow .15s;
+  }
+  .btn:active{transform:scale(.98);box-shadow:0 2px 8px rgba(0,102,204,.2)}
+  .btn.secondary{
+    background:#fff;color:#0066CC;
+    border:1.5px solid #0066CC;box-shadow:none;
+  }
+  .step{
+    text-align:left;background:#fafbfc;border-radius:10px;
+    padding:14px 16px;margin-top:16px;font-size:13px;color:#555;line-height:1.7;
+  }
+  .step b{color:#1a1a1a}
+  .footer{margin-top:24px;font-size:12px;color:#999}
+  .status{
+    display:none;font-size:13px;color:#0066CC;
+    margin-top:12px;padding:8px;background:#eaf3ff;border-radius:8px;
+  }
+  .status.show{display:block}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">🛋️</div>
+    <h1>智能沙发 配对</h1>
+    <p class="sub">扫描 NFC 标签触发配对，请确认设备名称：</p>
+
+    <div class="device">
+      要配对的设备
+      <div class="name" id="devname">—</div>
+    </div>
+
+    <a class="btn" id="openApp" href="#">打开 APP 配对</a>
+    <a class="btn secondary" id="install" href="/downloads/smartsofa.apk" download>下载安装 APP</a>
+
+    <div class="status" id="status">正在尝试唤起 APP…</div>
+
+    <div class="step">
+      <b>使用说明：</b><br>
+      1. 已安装 APP：点击"打开 APP 配对"<br>
+      2. 未安装：点击"下载安装 APP"<br>
+      3. 安装后再次贴近 NFC 标签即可自动配对
+    </div>
+
+    <div class="footer">SmartSofa · NFC Pairing</div>
+  </div>
+
 <script>
-  // Mirror current URL into custom scheme as a fallback (if app installed but App Link unverified).
-  try {
-    var u = new URL(location.href);
-    var name = u.searchParams.get('name') || '';
-    var fallback = 'smartsofa://pair?name=' + encodeURIComponent(name);
-    setTimeout(function(){ location.href = fallback; }, 800);
-    document.getElementById('store').href = 'https://github.com/zqf2004111/smartSofa/releases';
-  } catch(e) {}
+(function(){
+  var u = new URL(location.href);
+  var name = u.searchParams.get('name') || 'KD_SOF';
+  document.getElementById('devname').textContent = name;
+
+  var fallback = 'smartsofa://pair?name=' + encodeURIComponent(name);
+  var openBtn = document.getElementById('openApp');
+  openBtn.href = fallback;
+  openBtn.addEventListener('click', function(){
+    document.getElementById('status').classList.add('show');
+  });
+})();
 </script>
+</body>
+</html>
